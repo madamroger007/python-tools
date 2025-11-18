@@ -1,4 +1,4 @@
-# 📦 tools-managed-file-py  
+# 📦 managed-file-py
 A lightweight Python utility library for loading, exporting, duplicating, and managing dataset files.  
 Supports CSV & Excel loading, safe filename generation, exporting with clean directory structure, and CLI tools.
 
@@ -64,6 +64,22 @@ print(df)
 
 ```
 
+### 🔹Duplicate file
+```bash
+from pathlib import Path
+from tools_managed_file.duplicate import duplicate_file
+
+src = Path("photo.png")
+out_dir = Path("./duplicates")
+
+copies = duplicate_file(src, out_dir, count=3)
+
+print("Generated files:")
+for f in copies:
+    print(f)
+
+
+```
 
 ### 🔹Export a Dataset to CSV
 ```bash

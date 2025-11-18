@@ -3,8 +3,8 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tools-managed-file-py"
-version = "0.1.0"
+name = "managed-file-py"
+version = "0.0.1"
 description = "A utility library for managing and processing files."
 authors = [
     { name="Madamroger", email="adamsetiadijr07@gmail.com" }
