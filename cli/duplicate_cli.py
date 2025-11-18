@@ -5,16 +5,19 @@ from tools_managed_file.duplicate import duplicate_file
 def main():
     print("=== Duplicate File Tool ===")
 
-    file_path = Path(input("File path: ").strip().strip('"').strip("'"))
-    count = int(input("How many copies: "))
+    src = Path(input("File path: ").strip().replace('"', ''))
+    count = int(input("How many copies: ").strip())
+
+    out_dir = Path("./duplicates")
+    out_dir.mkdir(exist_ok=True)
 
     try:
-        zip_path = duplicate_file(file_path, count)
-        if zip_path:
-            print(f"\nZIP created at: {zip_path}")
-        print("Success!")
+        results = duplicate_file(src, out_dir, count)
+        print("\nCreated files:")
+        for f in results:
+            print(" -", f)
     except Exception as e:
-        print(f"Error: {e}")
+        print("Error:", e)
 
 if __name__ == "__main__":
     main()
