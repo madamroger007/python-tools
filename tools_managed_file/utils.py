@@ -7,7 +7,6 @@ logging.basicConfig(
     format="[%(levelname)s] %(message)s"
 )
 
-
 def validate_file(path: Path):
     """
     Validate that a file exists and is a file.

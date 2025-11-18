@@ -1,23 +1,34 @@
 import csv
+import pandas as pd
 from pathlib import Path
 from .utils import safe_filename
 
-def export_dataset(data: list, output_path: Path) -> Path:
+def load_dataset(path: Path):
     """
-    Export a list of dictionaries into a CSV file.
+    Load CSV or Excel file into pandas DataFrame.
     """
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    path = Path(path)
+    if not path.exists():
+        raise FileNotFoundError(f"Dataset does not exist: {path}")
 
-    if not data:
-        raise ValueError("Dataset is empty.")
+    if path.suffix.lower() in [".csv"]:
+        return pd.read_csv(path)
 
-    # Extract header from keys of the first item
-    headers = data[0].keys()
+    if path.suffix.lower() in [".xlsx", ".xls"]:
+        return pd.read_excel(path)
 
-    with open(output_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=headers)
-        writer.writeheader()
-        writer.writerows(data)
+    raise ValueError("File must be CSV or Excel.")
+
+def export_dataset(df, output_dir: Path, base_name: str) -> Path:
+    """
+    Export a pandas DataFrame to CSV.
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    filename = safe_filename(base_name) + ".csv"
+    output_path = output_dir / filename
+
+    df.to_csv(output_path, index=False, encoding="utf-8")
 
     return output_path
